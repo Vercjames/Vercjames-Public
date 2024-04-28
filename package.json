@@ -3,22 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
+    "start": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "startup": "next start -p 3001",
+    "format": "next lint --fix",
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "sass": "^1.75.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@typescript-eslint/parser": "^7.7.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "14.2.3",
+    "eslint-plugin-import-newlines": "^1.4.0",
+    "typescript": "^5"
   }
 }

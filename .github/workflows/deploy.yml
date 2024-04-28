@@ -1,0 +1,43 @@
+name: Deploy To Vercjames DO Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Transfer Source Code
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.UBUNTU_HOST }}
+          key: ${{ secrets.UBUNTU_SSHPRIVATE }}
+          username:  ${{ secrets.UBUNTU_USERNAME }}
+          password:  ${{ secrets.UBUNTU_PASSWORD }}
+          port: ${{ secrets.UBUNTU_PORT }}
+          source: "."
+          target: "/www/vercjames-public/"
+
+      - name: Install Dependencies and Start Application
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.UBUNTU_HOST }}
+          key: ${{ secrets.UBUNTU_SSHPRIVATE }}
+          username:  ${{ secrets.UBUNTU_USERNAME }}
+          password:  ${{ secrets.UBUNTU_PASSWORD }}
+          port: ${{ secrets.UBUNTU_PORT }}
+          # VERC: Since im using nvm on the server side, I need to tell it which node to use for yarn and pm2 to work
+          # VERC: running `which node` gave me the correct export path to use.
+          script: |
+            export PATH=$PATH:/home/vercjames/.nvm/versions/node/v22.0.0/bin
+            cd /www/vercjames-public
+            yarn install
+            yarn build
+            pm2 start yarn --name "vercjames-public" -- startup
+            pm2 save
