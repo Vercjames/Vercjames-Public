@@ -22,7 +22,7 @@ jobs:
           password:  ${{ secrets.UBUNTU_PASSWORD }}
           port: ${{ secrets.UBUNTU_PORT }}
           source: "."
-          target: "/www/vercjames-public/"
+          target: "/www/public.vercjames.com"
 
       - name: Install Dependencies and Start Application
         uses: appleboy/ssh-action@v1.0.3
@@ -36,9 +36,8 @@ jobs:
           # VERC: running `which node` gave me the correct export path to use.
           script: |
             export PATH=$PATH:/home/vercjames/.nvm/versions/node/v22.0.0/bin
-            cd /www/vercjames-public
+            cd /www/public.vercjames.com
             yarn install
             yarn build
-            pm2 delete vercjames-public || true
-            pm2 start yarn --name "vercjames-public" -- startup
+            pm2 reload public.vercjames.com || pm2 start "yarn startup" --name "public.vercjames.com"
             pm2 save
