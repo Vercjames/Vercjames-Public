@@ -39,5 +39,6 @@ jobs:
             cd /www/vercjames-public
             yarn install
             yarn build
+            pm2 delete vercjames-public || true
             pm2 start yarn --name "vercjames-public" -- startup
             pm2 save
