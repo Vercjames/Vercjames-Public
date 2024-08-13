@@ -6,6 +6,7 @@
     "dev": "next dev -p 3001",
     "start": "next dev -p 3001",
     "build": "next build",
+    "launch": "next start",
     "preview": "next start",
     "format": "next lint --fix",
     "lint": "next lint"

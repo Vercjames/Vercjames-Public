@@ -35,7 +35,6 @@ jobs:
           script: |
             cd /www/public.vercjames.com
             yarn install
-            yarn build
             pm2 delete public.vercjames.com || true 
             pm2 start "yarn next start -p 3001" --name "public.vercjames.com"
             pm2 save
