@@ -13,6 +13,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build Project
+        run: yarn build
+
       - name: Transfer Source Code
         uses: appleboy/scp-action@v0.1.7
         with:
